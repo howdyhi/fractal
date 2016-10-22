@@ -14,7 +14,7 @@
             var mycanvas=document.getElementById('mycanvas');
             var ctx=mycanvas.getContext('2d');
             
-            num = 2;
+            num = 5;
             
             clickCounts++;
             
@@ -34,9 +34,10 @@
             
             if(clickCounts == num)
                 {
-                //   for(var i=0; i<points.length; i+=4)
-                  //     {
                     var i=0;
+                    for(var j=0; j<num-1; j++)
+                       {
+                    
                             //point1
                             addPoint1_x = (points[i+1].x-points[i].x)/3*1+points[i].x;
                             addPoint1_y = (points[i+1].y-points[i].y)/3*1+points[i].y;
@@ -64,8 +65,14 @@
                          
                             //insert the 3rd point
                             points.splice(i+2, 0, new Victor(addPoint3_x, addPoint3_y));
+                            i+=4;
+                           
                             console.log(points);
-                        //}
+                            //console.log("i=0, points.length: "+points.length);
+
+                            
+                        }
+                    
                     
                     ctx.clearRect(0, 0, mycanvas.width, mycanvas.height);
                     //connect lines
@@ -90,6 +97,7 @@
             
             //console.log("myload()");
         }
+
     </script>
 </head>
 <body onload="myload()">
