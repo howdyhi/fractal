@@ -12,7 +12,7 @@
         function onmousedown(e)
         {
             var mycanvas=document.getElementById('mycanvas');
-            var ctx=mycanvas.getContext('2d');
+            ctx=mycanvas.getContext('2d');
             
             num = 5;
             
@@ -34,7 +34,24 @@
             
             if(clickCounts == num)
                 {
-                    var i=0;
+                    generateFractal();
+                }
+            
+
+            
+            
+        }
+        var myload=function()
+        {
+            //var num = prompt("Please enter number of edge",10);
+            mycanvas=document.getElementById('mycanvas');
+            mycanvas.addEventListener('mousedown',onmousedown,true);
+            
+            //console.log("myload()");
+        }
+        
+        var generateFractal = function(){
+            var i=0;
                     for(var j=0; j<num-1; j++)
                        {
                     
@@ -83,21 +100,7 @@
                     }
                     //ctx.lineTo(points[1].x, points[1].y);
                     ctx.stroke();
-                }
-            
-
-            
-            
-        }
-        var myload=function()
-        {
-            //var num = prompt("Please enter number of edge",10);
-            mycanvas=document.getElementById('mycanvas');
-            mycanvas.addEventListener('mousedown',onmousedown,true);
-            
-            //console.log("myload()");
-        }
-
+        };
     </script>
 </head>
 <body onload="myload()">
