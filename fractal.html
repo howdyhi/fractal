@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="./bower_components/victor/build/victor.js"></script>
+    <script>
+        //var Victor = require('victor');
+        
+       // points=[];
+
+        function onmousedown(e)
+        {
+            var mycanvas=document.getElementById('mycanvas');
+            var ctx=mycanvas.getContext('2d');
+            ctx.beginPath();
+            ctx.fillStyle='#0000FF';
+            ctx.arc(event.x,event.y,20,0,2*Math.PI);
+            //ctx.arc(event.x)
+            ctx.closePath();
+            ctx.fill();
+            
+            ctx.moveTo(e.clientX,e.clientY);
+           //points.push(new Vector())
+            var vec = new Victor(e.clientX, e.clientY);
+            console.log("vec: "+vec);
+            console.log("("+e.clientX+", "+e.clientY+")");
+            
+            
+        }
+        var myload=function()
+        {
+            //var edgeNum = prompt("Please enter number of edge",10);
+            mycanvas=document.getElementById('mycanvas');
+            mycanvas.addEventListener('mousedown',onmousedown,true);
+            
+            //console.log("myload()");
+        }
+    </script>
+</head>
+<body onload="myload()">
+   <canvas id="mycanvas" width="1393" height="697" style="border:1px solid #000000"></canvas>
+    
+</body>
+</html>
