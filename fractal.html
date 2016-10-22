@@ -34,8 +34,8 @@
             
             if(clickCounts == num)
                 {
-                   // for(var i=0; i<points.length; i+=4)
-                     //   {
+                //   for(var i=0; i<points.length; i+=4)
+                  //     {
                     var i=0;
                             //point1
                             addPoint1_x = (points[i+1].x-points[i].x)/3*1+points[i].x;
@@ -61,16 +61,13 @@
                             var c60 = Math.cos(60*Math.PI/180);
                             addPoint3_x = c60*(points[i+1].x-points[i+2].x)-s60*(points[i+1].y-points[i+2].y)+points[i+2].x;
                             addPoint3_y = s60*(points[i+1].x-points[i+2].x)+c60*(points[i+1].y-points[i+2].y)+points[i+2].y;                
-                            //addPoint3_x = Math.tan(60)*(points[i+1].x+(points[i+2].x)/2);
-                            //addPoint3_y = Math.tan(60)*(points[i+1].y+(points[i+2].y)/2);
-                            
-                            
-                            
-                            
+                         
                             //insert the 3rd point
                             points.splice(i+2, 0, new Victor(addPoint3_x, addPoint3_y));
                             console.log(points);
-                     //   }
+                        //}
+                    
+                    ctx.clearRect(0, 0, mycanvas.width, mycanvas.height);
                     //connect lines
                     ctx.beginPath();
                     ctx.moveTo(points[0].x, points[0].y);
