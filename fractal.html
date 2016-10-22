@@ -5,26 +5,41 @@
     <title>Document</title>
     <script src="./bower_components/victor/build/victor.js"></script>
     <script>
-        //var Victor = require('victor');
         
-       // points=[];
+        points=[];
+        clickCounts = 0;
 
         function onmousedown(e)
         {
             var mycanvas=document.getElementById('mycanvas');
             var ctx=mycanvas.getContext('2d');
-            ctx.beginPath();
+            /*ctx.beginPath();
             ctx.fillStyle='#0000FF';
             ctx.arc(event.x,event.y,20,0,2*Math.PI);
             //ctx.arc(event.x)
             ctx.closePath();
-            ctx.fill();
+            ctx.fill();*/
             
-            ctx.moveTo(e.clientX,e.clientY);
-           //points.push(new Vector())
-            var vec = new Victor(e.clientX, e.clientY);
-            console.log("vec: "+vec);
+            clickCounts++;
+            
+            if(clickCounts>=2){ 
+                ctx.lineTo(e.clientX, e.clientY);
+                ctx.stroke();
+            }
+            ctx.moveTo(e.clientX, e.clientY);
+            
+            
+            //push points
+            //var vec = new Victor(e.clientX, e.clientY);
+            //points.push(vec);
+            points.push(new Victor(e.clientX, e.clientY));
+            
+            //debug
             console.log("("+e.clientX+", "+e.clientY+")");
+            console.log(points);
+            
+            
+
             
             
         }
