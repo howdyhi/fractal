@@ -17,26 +17,79 @@
             num = 5;
             
             clickCounts++;
+            if(clickCounts<=num){//stop pushing point when reaching the input number
+                if(clickCounts>=2/*&&clickCounts<=num*/){ 
+                    ctx.lineTo(e.clientX, e.clientY);
+                    ctx.stroke();
+                }
+                ctx.moveTo(e.clientX, e.clientY);
+
+
+                //push points
+                points.push(new Victor(e.clientX, e.clientY));
             
-            if(clickCounts>=2&&clickCounts<=num){ 
-                ctx.lineTo(e.clientX, e.clientY);
-                ctx.stroke();
             }
-            ctx.moveTo(e.clientX, e.clientY);
-            
-            
-            //push points
-            points.push(new Victor(e.clientX, e.clientY));
-            
             //debug
             //console.log("("+e.clientX+", "+e.clientY+")");
             //console.log(points);
             
             if(clickCounts == num)
                 {
-                    generateFractal();
+                    generateFractal(/*num*/);
                 }
-            
+            else if(clickCounts>num)
+                {
+                    console.log("in else if, points.length: "+points.length);
+                    console.log("points: "+points);
+                    //generateFractal(num*num);
+                    var i=0;
+                    for(var j=0; j<num*num-1; j++)
+                       {
+                            //point1
+                            addPoint1_x = (points[i+1].x-points[i].x)/3*1+points[i].x;
+                            addPoint1_y = (points[i+1].y-points[i].y)/3*1+points[i].y;
+
+
+                            //point2
+                            addPoint2_x = (points[i+1].x-points[i].x)/3*2+points[i].x;
+                            addPoint2_y = (points[i+1].y-points[i].y)/3*2+points[i].y;
+
+                            //insert previous 2 points
+
+                            points.splice(i+1, 0, new Victor(addPoint1_x, addPoint1_y));                          
+                            points.splice(i+2, 0, new Victor(addPoint2_x, addPoint2_y));
+
+                            /*console.log("addPoint1_x: "+addPoint1_x);
+                            console.log("addPoint1_y: "+addPoint1_y);*/
+
+                            //r = Math.sqrt((points[i+2].x-points[i+1].x)*(points[i+2].x-points[i+1].x)+(points[i+2].y-points[i+1].y)*(points[i+2].y-points[i+1].y))/2;
+
+                            //point3
+                            var s60 = Math.sin(60*Math.PI/180);
+                            var c60 = Math.cos(60*Math.PI/180);
+                            addPoint3_x = c60*(points[i+1].x-points[i+2].x)-s60*(points[i+1].y-points[i+2].y)+points[i+2].x;
+                            addPoint3_y = s60*(points[i+1].x-points[i+2].x)+c60*(points[i+1].y-points[i+2].y)+points[i+2].y;                
+
+                            //insert the 3rd point
+                            points.splice(i+2, 0, new Victor(addPoint3_x, addPoint3_y));
+                            i+=4;
+
+                            //console.log(points);
+                            //console.log("i=0, points.length: "+points.length);
+
+
+                    }
+                    
+                    
+                    ctx.clearRect(0, 0, mycanvas.width, mycanvas.height);
+                    //connect lines
+                    ctx.beginPath();
+                    ctx.moveTo(points[0].x, points[0].y);
+                    for(var i=0; i<points.length; i++){
+                        ctx.lineTo(points[i].x, points[i].y);
+                    }
+                    ctx.stroke();
+                }
 
             
             
@@ -50,45 +103,47 @@
             //console.log("myload()");
         }
         
-        var generateFractal = function(){
+        var generateFractal = function(/*num*/){
             var i=0;
-                    for(var j=0; j<num-1; j++)
-                       {
-                    
-                            //point1
-                            addPoint1_x = (points[i+1].x-points[i].x)/3*1+points[i].x;
-                            addPoint1_y = (points[i+1].y-points[i].y)/3*1+points[i].y;
+                for(var j=0; j<num-1; j++)//j=number of sides
+            //console.log("b4 for, points.length= "+points.length);
+              //  for(var i=0; i<points.length; i+=4)
+                   {
 
-                            
-                            //point2
-                            addPoint2_x = (points[i+1].x-points[i].x)/3*2+points[i].x;
-                            addPoint2_y = (points[i+1].y-points[i].y)/3*2+points[i].y;
-                            
-                            //insert previous 2 points
-                            
-                            points.splice(i+1, 0, new Victor(addPoint1_x, addPoint1_y));                          
-                            points.splice(i+2, 0, new Victor(addPoint2_x, addPoint2_y));
-                            
-                            console.log("addPoint1_x: "+addPoint1_x);
-                            console.log("addPoint1_y: "+addPoint1_y);
-                            
-                            //r = Math.sqrt((points[i+2].x-points[i+1].x)*(points[i+2].x-points[i+1].x)+(points[i+2].y-points[i+1].y)*(points[i+2].y-points[i+1].y))/2;
-                            
-                            //point3
-                            var s60 = Math.sin(60*Math.PI/180);
-                            var c60 = Math.cos(60*Math.PI/180);
-                            addPoint3_x = c60*(points[i+1].x-points[i+2].x)-s60*(points[i+1].y-points[i+2].y)+points[i+2].x;
-                            addPoint3_y = s60*(points[i+1].x-points[i+2].x)+c60*(points[i+1].y-points[i+2].y)+points[i+2].y;                
-                         
-                            //insert the 3rd point
-                            points.splice(i+2, 0, new Victor(addPoint3_x, addPoint3_y));
-                            i+=4;
-                           
-                            console.log(points);
-                            //console.log("i=0, points.length: "+points.length);
+                        //point1
+                        addPoint1_x = (points[i+1].x-points[i].x)/3*1+points[i].x;
+                        addPoint1_y = (points[i+1].y-points[i].y)/3*1+points[i].y;
 
-                            
-                        }
+
+                        //point2
+                        addPoint2_x = (points[i+1].x-points[i].x)/3*2+points[i].x;
+                        addPoint2_y = (points[i+1].y-points[i].y)/3*2+points[i].y;
+
+                        //insert previous 2 points
+
+                        points.splice(i+1, 0, new Victor(addPoint1_x, addPoint1_y));                          
+                        points.splice(i+2, 0, new Victor(addPoint2_x, addPoint2_y));
+
+                        //console.log("addPoint1_x: "+addPoint1_x);
+                        //console.log("addPoint1_y: "+addPoint1_y);
+
+                        //r = Math.sqrt((points[i+2].x-points[i+1].x)*(points[i+2].x-points[i+1].x)+(points[i+2].y-points[i+1].y)*(points[i+2].y-points[i+1].y))/2;
+
+                        //point3
+                        var s60 = Math.sin(60*Math.PI/180);
+                        var c60 = Math.cos(60*Math.PI/180);
+                        addPoint3_x = c60*(points[i+1].x-points[i+2].x)-s60*(points[i+1].y-points[i+2].y)+points[i+2].x;
+                        addPoint3_y = s60*(points[i+1].x-points[i+2].x)+c60*(points[i+1].y-points[i+2].y)+points[i+2].y;                
+
+                        //insert the 3rd point
+                        points.splice(i+2, 0, new Victor(addPoint3_x, addPoint3_y));
+                        i+=4;
+
+                        //console.log(points);
+                        //console.log("i=0, points.length: "+points.length);
+
+
+                    }
                     
                     
                     ctx.clearRect(0, 0, mycanvas.width, mycanvas.height);
@@ -98,8 +153,9 @@
                     for(var i=0; i<points.length; i++){
                         ctx.lineTo(points[i].x, points[i].y);
                     }
-                    //ctx.lineTo(points[1].x, points[1].y);
                     ctx.stroke();
+            
+            //console.log("points.length: "+points.length);
         };
     </script>
 </head>
