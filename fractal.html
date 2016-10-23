@@ -14,19 +14,22 @@
             var mycanvas=document.getElementById('mycanvas');
             ctx=mycanvas.getContext('2d');
             
-            num = 5;
+            eX=e.clientX-10; eY=e.clientY-=10;//sub the padding of the canvas
+            console.log("af: "+eX+", "+eY);
+            
+            num = 6;
             
             clickCounts++;
             if(clickCounts<=num){//stop pushing point when reaching the input number
-                if(clickCounts>=2/*&&clickCounts<=num*/){ 
-                    ctx.lineTo(e.clientX, e.clientY);
+                if(clickCounts>=2){ 
+                    ctx.lineTo(eX, eY);
                     ctx.stroke();
                 }
-                ctx.moveTo(e.clientX, e.clientY);
+                ctx.moveTo(eX, eY);
 
 
                 //push points
-                points.push(new Victor(e.clientX, e.clientY));
+                points.push(new Victor(eX, eY));
             
             }
             
