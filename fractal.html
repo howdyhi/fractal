@@ -12,6 +12,11 @@
         var myload=function()
         {
             num = prompt("Please enter number of edge. (n<10)",5);
+            num=Number(num);
+            if(!num||isNaN(num))
+               num=5;
+            else if(num>10)
+                num=10;
             mycanvas=document.getElementById('mycanvas');
             mycanvas.addEventListener('mousedown',onmousedown,true);
         }
@@ -24,7 +29,7 @@
             
             eX=e.clientX-10; eY=e.clientY-=10;//sub the margin of canvas
             
-            num=Number(num);
+            
             
             clickCounts++;
             
