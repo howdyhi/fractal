@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="./bower_components/victor/build/victor.js"></script>
     <script>
         
         points=[];
         clickCounts = 0;
+        
+        function Victor(x,y)
+        {
+            this.x = x;
+            this.y = y;
+        }
         
         var myload = function()
         {
