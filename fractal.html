@@ -18,7 +18,7 @@
             
             clickCounts++;
             
-            if(clickCounts>=2){ 
+            if(clickCounts>=2&&clickCounts<=num){ 
                 ctx.lineTo(e.clientX, e.clientY);
                 ctx.stroke();
             }
