@@ -9,94 +9,101 @@
         points=[];
         clickCounts = 0;
 
+        var myload=function()
+        {
+            //num = prompt("Please enter number of edge. (n<10)",5);
+            mycanvas=document.getElementById('mycanvas');
+            mycanvas.addEventListener('mousedown',onmousedown,true);
+        }
+        
+        
         function onmousedown(e)
         {
             var mycanvas=document.getElementById('mycanvas');
             ctx=mycanvas.getContext('2d');
             
-            eX=e.clientX-10; eY=e.clientY-=10;//sub the padding of the canvas
+            eX=e.clientX-10; eY=e.clientY-=10;//sub the margin of canvas
             
-            num = 6;
+            num=5;
             
             clickCounts++;
+            console.log("clickCounts: "+clickCounts);
+            console.log("num: "+num);
+            
             if(clickCounts<=num){//stop pushing point when reaching the input number
                 if(clickCounts>=2){//draw line, 2 dots composes a line
                     ctx.lineTo(eX, eY);
                     ctx.stroke();
+                    console.log("阿");
                 }
                 ctx.moveTo(eX, eY);
 
                 //push points
                 points.push(new Victor(eX, eY));
+                
+                console.log("???");
             
             }
             
             if(clickCounts == num)//clickCounts reach the input value
                 {
                     generateFractal(num-1);
+                    console.log("if");
                 }
             else if(clickCounts==num+1)
                 {
-                    generateFractal((num-1)*4);
-                    
+                    console.log("1st else if");
+                    generateFractal((num-1)*4);             
                 }
             else if(clickCounts==num+2)
                 {
-                    generateFractal((num-1)*4*4);
+                    console.log("2nd else if");
+                    generateFractal((num-1)*4*4);   
                 }
             else if(clickCounts==num+3)
                 {
-                    generateFractal((num-1)*4*4*4);
+                    console.log("3rd else if");
+                    generateFractal((num-1)*4*4*4);       
                 }
        
         }
-        var myload=function()
-        {
-            //var num = prompt("Please enter number of edge",10);
-            mycanvas=document.getElementById('mycanvas');
-            mycanvas.addEventListener('mousedown',onmousedown,true);
-        }
+
         
         var generateFractal = function(n){
             var i=0;
-            console.log("num-1: "+Number(num-1));
-                for(var j=0; j<n; j++)//j=number of sides
-                   {
+            for(var j=0; j<n; j++)//j=number of sides
+               {
+                    //point1 in one side
+                    addPoint1_x = (points[i+1].x-points[i].x)/3*1+points[i].x;
+                    addPoint1_y = (points[i+1].y-points[i].y)/3*1+points[i].y;
 
-                        //point1 in one side
-                        addPoint1_x = (points[i+1].x-points[i].x)/3*1+points[i].x;
-                        addPoint1_y = (points[i+1].y-points[i].y)/3*1+points[i].y;
+                    //point2
+                    addPoint2_x = (points[i+1].x-points[i].x)/3*2+points[i].x;
+                    addPoint2_y = (points[i+1].y-points[i].y)/3*2+points[i].y;
 
+                    //insert previous 2 points
+                    points.splice(i+1, 0, new Victor(addPoint1_x, addPoint1_y));                          
+                    points.splice(i+2, 0, new Victor(addPoint2_x, addPoint2_y));
 
-                        //point2
-                        addPoint2_x = (points[i+1].x-points[i].x)/3*2+points[i].x;
-                        addPoint2_y = (points[i+1].y-points[i].y)/3*2+points[i].y;
+                    //point3
+                    var s60 = Math.sin(60*Math.PI/180);
+                    var c60 = Math.cos(60*Math.PI/180);
+                    addPoint3_x = c60*(points[i+1].x-points[i+2].x)-s60*(points[i+1].y-points[i+2].y)+points[i+2].x;
+                    addPoint3_y = s60*(points[i+1].x-points[i+2].x)+c60*(points[i+1].y-points[i+2].y)+points[i+2].y;                
 
-                        //insert previous 2 points
-
-                        points.splice(i+1, 0, new Victor(addPoint1_x, addPoint1_y));                          
-                        points.splice(i+2, 0, new Victor(addPoint2_x, addPoint2_y));
-
-                        //point3
-                        var s60 = Math.sin(60*Math.PI/180);
-                        var c60 = Math.cos(60*Math.PI/180);
-                        addPoint3_x = c60*(points[i+1].x-points[i+2].x)-s60*(points[i+1].y-points[i+2].y)+points[i+2].x;
-                        addPoint3_y = s60*(points[i+1].x-points[i+2].x)+c60*(points[i+1].y-points[i+2].y)+points[i+2].y;                
-
-                        //insert the 3rd point
-                        points.splice(i+2, 0, new Victor(addPoint3_x, addPoint3_y));
-                        i+=4;
-                    }
-                    
-                    
-                    ctx.clearRect(0, 0, mycanvas.width, mycanvas.height);
-                    //connect lines
-                    ctx.beginPath();
-                    ctx.moveTo(points[0].x, points[0].y);
-                    for(var i=0; i<points.length; i++){
-                        ctx.lineTo(points[i].x, points[i].y);
-                    }
-                    ctx.stroke();
+                    //insert the 3rd point
+                    points.splice(i+2, 0, new Victor(addPoint3_x, addPoint3_y));
+                    i+=4;
+                }
+                //refresh canvas                  
+                ctx.clearRect(0, 0, mycanvas.width, mycanvas.height);
+                //re-connect lines
+                ctx.beginPath();
+                ctx.moveTo(points[0].x, points[0].y);
+                for(var i=0; i<points.length; i++){
+                    ctx.lineTo(points[i].x, points[i].y);
+                }
+                ctx.stroke();
         };
     </script>
 </head>
