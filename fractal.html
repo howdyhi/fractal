@@ -8,10 +8,10 @@
         
         points=[];
         clickCounts = 0;
-
+        
         var myload=function()
         {
-            //num = prompt("Please enter number of edge. (n<10)",5);
+            num = prompt("Please enter number of edge. (n<10)",5);
             mycanvas=document.getElementById('mycanvas');
             mycanvas.addEventListener('mousedown',onmousedown,true);
         }
@@ -24,11 +24,9 @@
             
             eX=e.clientX-10; eY=e.clientY-=10;//sub the margin of canvas
             
-            num=5;
+            num=Number(num);
             
             clickCounts++;
-            console.log("clickCounts: "+clickCounts);
-            console.log("num: "+num);
             
             if(clickCounts<=num){//stop pushing point when reaching the input number
                 if(clickCounts>=2){//draw line, 2 dots composes a line
@@ -44,7 +42,7 @@
                 console.log("???");
             
             }
-            
+
             if(clickCounts == num)//clickCounts reach the input value
                 {
                     generateFractal(num-1);
