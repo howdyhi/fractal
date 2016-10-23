@@ -9,26 +9,28 @@
         points=[];
         clickCounts = 0;
         
-        var myload=function()
+        var myload = function()
         {
-            num = prompt("Please enter number of edge. (n<10)",5);
+            num = prompt("Please enter number of edge. (2<=n<=10)",5);
             num = Number(num);
-            if(!num||isNaN(num)) 
-               num=5;
-            else if(num>10)
-                num=10;
+            if(!num || isNaN(num)) 
+               num = 5;
+            else if(num == 1)
+                num = 2
+            else if(num > 10)
+                num = 10;
             
-            mycanvas=document.getElementById('mycanvas');
+            mycanvas = document.getElementById('mycanvas');
             mycanvas.addEventListener('mousedown',onmousedown,true);
         }
         
         
         function onmousedown(e)
         {
-            var mycanvas=document.getElementById('mycanvas');
+            var mycanvas = document.getElementById('mycanvas');
             ctx=mycanvas.getContext('2d');
             
-            eX=e.clientX-10; eY=e.clientY-=10;//sub the margin of canvas
+            eX=e.clientX-10; eY = e.clientY-=10;//sub the margin of canvas
             
             
             
@@ -50,13 +52,13 @@
             if(clickCounts == num)//clickCounts reach the input value
                 generateFractal(num-1);
             
-            else if(clickCounts==num+1)
+            else if(clickCounts == num+1)
                     generateFractal((num-1)*4);             
             
-            else if(clickCounts==num+2)
+            else if(clickCounts == num+2)
                     generateFractal((num-1)*4*4);   
             
-            else if(clickCounts==num+3)
+            else if(clickCounts == num+3)
                    generateFractal((num-1)*4*4*4);       
        
         }
