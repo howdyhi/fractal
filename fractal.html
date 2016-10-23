@@ -8,7 +8,7 @@
         points=[];
         clickCounts = 0;
         
-        function Victor(x,y)
+        function point(x,y)
         {
             this.x = x;
             this.y = y;
@@ -49,7 +49,7 @@
                 ctx.moveTo(eX, eY);
 
                 //push points
-                points.push(new Victor(eX, eY));
+                points.push(new point(eX, eY));
 
             
             }
@@ -82,8 +82,8 @@
                     addPoint2_y = (points[i+1].y-points[i].y)/3*2+points[i].y;
 
                     //insert previous 2 points
-                    points.splice(i+1, 0, new Victor(addPoint1_x, addPoint1_y));                          
-                    points.splice(i+2, 0, new Victor(addPoint2_x, addPoint2_y));
+                    points.splice(i+1, 0, new point(addPoint1_x, addPoint1_y));                          
+                    points.splice(i+2, 0, new point(addPoint2_x, addPoint2_y));
 
                     //point3
                     var s60 = Math.sin(60*Math.PI/180);
@@ -92,7 +92,7 @@
                     addPoint3_y = s60*(points[i+1].x-points[i+2].x)+c60*(points[i+1].y-points[i+2].y)+points[i+2].y;                
 
                     //insert the 3rd point
-                    points.splice(i+2, 0, new Victor(addPoint3_x, addPoint3_y));
+                    points.splice(i+2, 0, new point(addPoint3_x, addPoint3_y));
                     i+=4;
                 }
                 //refresh canvas                  
